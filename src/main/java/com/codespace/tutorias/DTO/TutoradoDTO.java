@@ -27,7 +27,16 @@ public class TutoradoDTO {
             message = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.")
     private String password;
 
+    private String rol;
+
     public TutoradoDTO(){}
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+    public String getRol() {
+        return rol;
+    }
 
     public String getMatricula() {
         return matricula;

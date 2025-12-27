@@ -5,7 +5,6 @@ import com.codespace.tutorias.exceptions.BusinessException;
 import com.codespace.tutorias.models.*;
 import com.codespace.tutorias.repository.HorarioRepository;
 import com.codespace.tutorias.repository.MateriaRepository;
-import com.codespace.tutorias.repository.TutoradoRepository;
 import com.codespace.tutorias.repository.TutoriasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,6 @@ import java.util.List;
 @Component
 public class TutoriaMapping {
 
-    @Autowired
-    private TutoradoRepository tutoradoRepository;
     @Autowired
     private HorarioRepository horarioRepository;
     @Autowired

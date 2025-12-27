@@ -1,17 +1,17 @@
 package com.codespace.tutorias.controllers;
 
-import com.codespace.tutorias.DTO.CambioPasswordDTO;
 import com.codespace.tutorias.DTO.TutorDTO;
 import com.codespace.tutorias.DTO.TutoresPublicosDTO;
 import com.codespace.tutorias.exceptions.ApiResponse;
 import com.codespace.tutorias.services.HorarioService;
 import com.codespace.tutorias.services.TutorService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +25,12 @@ public class TutorController {
     @Autowired
     private HorarioService horarioService;
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<TutoresPublicosDTO> getTutores(){
         return tutorService.mostrarTutoresPublicos();
     }
 
-    @PostMapping("/registro")
+    @PostMapping()
     public TutorDTO registrarTutorado(@Valid @RequestBody TutorDTO dto){
         return tutorService.crearTutores(dto);
     }
@@ -40,28 +40,16 @@ public class TutorController {
         return tutorService.buscarTutorPublico(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/misHorarios")
-    public ResponseEntity<?> misHorarios(HttpServletRequest request){
-        String rol = (String) request.getAttribute("rol");
-        String matricula = (String) request.getAttribute("matricula");
-
-        if(!"TUTOR".equals(rol) && !"ADMIN".equals(rol)) {
-            return ResponseEntity.status(403).body(new ApiResponse<>(false, "Acceso denegado", null));
-        }
-
-        return ResponseEntity.ok(new ApiResponse<>(true, "Mis horarios:", horarioService.misHorarios(matricula)));
+    @PreAuthorize("hasRole('TUTOR')")
+    @GetMapping("/me/horarios")
+    public ResponseEntity<?> misHorarios(Authentication auth){   
+        return ResponseEntity.ok(new ApiResponse<>(true, "Mis horarios:", horarioService.misHorarios(auth.getName())));
     }
 
-    @GetMapping("/misTutorias")
-    public ResponseEntity<?> misTutorias(HttpServletRequest request){
-        String rol = (String) request.getAttribute("rol");
-        String matricula = (String) request.getAttribute("matricula");
-
-        if (!"TUTOR".equals(rol) && !"ADMIN".equals(rol)) {
-            return ResponseEntity.status(403).body(new ApiResponse<>(false, "Acceso denegado", null));
-        }
-
-        return ResponseEntity.ok(new ApiResponse<>(true, "Mis tutorias",tutorService.findMisTutorias(matricula)));
+    @PreAuthorize("hasRole('TUTOR')")
+    @GetMapping("/me/tutorias")
+    public ResponseEntity<?> misTutorias(Authentication auth){
+        return ResponseEntity.ok(new ApiResponse<>(true, "Mis tutorias",tutorService.findMisTutorias(auth.getName())));
     }
 
 

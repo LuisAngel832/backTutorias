@@ -4,6 +4,7 @@
  */
 package com.codespace.tutorias.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author shtven
  */
 @RestController
-@RequestMapping("/e")
+@RequestMapping("/tutor")
 public class PruebaController {
 
-    @GetMapping("/s")
+    @GetMapping("/test")
+    @PreAuthorize("hasRole('TUTOR')")
     public String s(){
-        return "¿Qué andas haciendo aquí?";
+        return "ESTO SOLO LO PUEDEN VER LOS TUTORES";
     }
 
     @GetMapping("s/t")

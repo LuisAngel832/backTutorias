@@ -2,6 +2,7 @@ package com.codespace.tutorias.Mapping;
 
 import com.codespace.tutorias.DTO.TutorDTO;
 import com.codespace.tutorias.DTO.TutoresPublicosDTO;
+import com.codespace.tutorias.models.EnumRol;
 import com.codespace.tutorias.models.Tutor;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,7 @@ public class TutorMapping {
         dto.setApellidoM(entidad.getApellidoM());
         dto.setCorreo(entidad.getCorreo());
         dto.setPassword(entidad.getPassword());
+        dto.setRol(entidad.getRol().toString());
         return dto;
     }
 
@@ -36,6 +38,7 @@ public class TutorMapping {
         entidad.setApellidoM(dto.getApellidoM());
         entidad.setCorreo(dto.getCorreo());
         entidad.setPassword(dto.getPassword());
+        entidad.setRol(Enum.valueOf(EnumRol.class, dto.getRol()));
         return entidad;
     }
 }

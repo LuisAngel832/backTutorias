@@ -3,7 +3,6 @@ package com.codespace.tutorias.services;
 import com.codespace.tutorias.DTO.CrearHorarioDTO;
 import com.codespace.tutorias.DTO.HorariosDTO;
 import com.codespace.tutorias.DTO.HorariosMostrarDTO;
-import com.codespace.tutorias.DTO.HorariosPublicosDTO;
 import com.codespace.tutorias.Helpers.DateHelper;
 import com.codespace.tutorias.Mapping.HorarioMapping;
 import com.codespace.tutorias.exceptions.BusinessException;
@@ -58,8 +57,11 @@ public class HorarioService {
                 });
     }
 
-    public void eliminarHorario(int id) {
-        horarioRepository.deleteById(id);
+    public void eliminarHorario(int id, String matricula) {
+        Horario horario = horarioRepository.findByIdHorarioAndTutor_Matricula(id, matricula)
+                .orElseThrow(() -> new BusinessException("No se encontró el horario o no tienes permiso para eliminarlo."));
+
+        horarioRepository.delete(horario);
     }
 
 
