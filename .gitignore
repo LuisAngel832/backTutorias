@@ -33,3 +33,6 @@ application.properties
 
 ### VS Code ###
 .vscode/
+
+application-prod.properties
+.env
