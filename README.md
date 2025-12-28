@@ -169,6 +169,9 @@ El proyecto está desplegado en **Render**:
 **Luis Ángel**
 Estudiante de Ingeniería en Software
 Universidad Veracruzana
+**Gael Dominguez**
+Estudiante de Ingeniería en Software
+Universidad Veracruzana
 
 GitHub: [https://github.com/LuisAngel832](https://github.com/LuisAngel832)
 
